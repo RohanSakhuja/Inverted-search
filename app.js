@@ -62,7 +62,7 @@ app.get('/clear', (req, res) => {
 
 app.put('/indexPDF', (req, res) => {
     console.log(JSON.stringify(req.body, null, 4));
-    
+
     res.status(200).send({
         "Success": true,
         "Status": "Indexing successful"
@@ -163,6 +163,6 @@ function addWord(words, word, docID) {
 }
 
 const PORT = 5000;
-app.listen(PORT, () => {
+app.listen(process.env.PORT || 5000, () => {
     console.log(`Server is running on port ${PORT}`);
 });
