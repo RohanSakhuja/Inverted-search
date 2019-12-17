@@ -60,14 +60,14 @@ app.get('/clear', (req, res) => {
     // });
 });
 
-app.put('/indexPDF', (req, res) => {
-    console.log(JSON.stringify(req.body, null, 4));
+// app.put('/indexPDF', (req, res) => {
+//     console.log(JSON.stringify(req.body, null, 4));
 
-    res.status(200).send({
-        "Success": true,
-        "Status": "Indexing successful"
-    });
-});
+//     res.status(200).send({
+//         "Success": true,
+//         "Status": "Indexing successful"
+//     });
+// });
 
 app.post('/search', (req, res) => {
     const word = req.body.word;
@@ -86,12 +86,16 @@ app.post('/search', (req, res) => {
             });
             return
         }
+
+        const keys = Object.keys(temp).slice(0, 10);
+        // console.log(keys);
+
         jsonReader('./db/para.json', (err, para) => {
             if (err) {
                 console.log(err)
                 return
             }
-            Object.keys(temp).forEach(paraID => {
+            keys.forEach(paraID => {
                 data[paraID] = para[paraID];
             });
             res.status(200).send({
