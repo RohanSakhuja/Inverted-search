@@ -1,0 +1,40 @@
+<html>
+  <body>
+    <h3>Search word</h3>
+    <input type="text" name="word" id="word" placeholder="word"/><br /><br />
+    <button onclick="search()">Search</button>
+    <hr />
+    <br /><br />
+    <div id="results"></div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+      function search() {
+        const url = "http://127.0.0.1:5000/search";
+        const word = document.getElementById("word").value;
+        const data = { word: word.toString() };
+        axios({
+          method: "post",
+          url: url,
+          data: data
+        })
+          .then(resp => {
+            return resp.data.data;
+          })
+          .then(res => {
+            var htmlText = "";
+            if (res != null) {
+              Object.keys(res).forEach(key => {
+                console.log(res[key]);
+                console.log(key);
+                htmlText += `DocID: ${key}<br><p>${res[key]}</p><br><br>`;
+              });
+            } else {
+              htmlText = "No results found.";
+            }
+            document.getElementById("results").innerHTML = htmlText;
+          })
+          .catch(err => console.log(err));
+      }
+    </script>
+  </body>
+</html>
